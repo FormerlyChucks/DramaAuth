@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>Drama Auth</title>
+    <meta name='description' content='API Authentication For rdrama.com'>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+    <h1>Drama Auth</h1>
+    <h5>API Authorization for <a href="https://rdrama.ga">rdrama.ga</a></h5>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+    <form action="/authorize" method="post">
+        <label for="auth_cid">Client ID:</label>
+        <input id="auth_cid" name="auth_cid" size="64"/><br/>
+        <label for="auth_secret" name="auth_secret">Client Secret:</label>
+        <input id="auth_secret" name="auth_secret" size="128"/><br />
+        <label for="auth_scopes" name="auth_scopes">Scopes:</label>
+        <input id="auth_scopes" name="auth_scopes" size="51"/><br />
+        <input type="submit" value="SUBMIT" />
+    </form>
+    {% if j %}
+    <div>
+        Your Access Token: <code>{{ j.get('access_token') }}</code><br/>
+        Expires At: <code>{{ j.get('expires_at') }}</code><br/>
+        Your Refresh Token: <code>{{ j.get('refresh_token') }}</code><br/>
+        Your Scopes: <code>{{ j.get('scopes') }}</code><br/>
+        Token Type: <code>{{ j.get('token_type') }}</code><br/>
+    </div>
+    {% endif %}
+</body>
+</html>
