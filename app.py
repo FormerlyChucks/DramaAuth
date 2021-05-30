@@ -18,7 +18,7 @@ def authorize():
                                 'state': 'wtf',
                                 'scope': scopes,
                                 'permanent': 'true'}
-        authorize_user = requests.post('https://rdrama.ga/oauth/authorize',params=authorization_params)
+        authorize_user = requests.post('https://rdrama.net/oauth/authorize',params=authorization_params)
         if authorize_user.status_code == 200:
             response = make_response(redirect(authorize_user.url))
             response.set_cookie('client_id', client_id)
@@ -38,7 +38,7 @@ def grant():
                   'client_secret': client_secret,
                   'grant_type': 'code',
                   'code': code}
-    grant_user = requests.post('https://rdrama.ga/oauth/grant', data=grant_data)
+    grant_user = requests.post('https://rdrama.net/oauth/grant', data=grant_data)
     if grant_user.status_code == 200:
         response = make_response(render_template('index.html',j=gdata.json()))
         response.delete_cookie('client_secret')
