@@ -14,7 +14,7 @@ def authorize():
     scopes = request.form.get('auth_scopes')
     if client_id and scopes and client_secret:
         authorization_params = {'client_id': client_id,
-                                'redirect_uri': 'http://localhost:8888/grant',
+                                'redirect_uri': 'http://127.0.0.1:5000/grant',
                                 'state': 'wtf',
                                 'scope': scopes,
                                 'permanent': 'true'}
@@ -40,12 +40,12 @@ def grant():
                   'code': code}
     grant_user = requests.post('https://rdrama.net/oauth/grant', data=grant_data)
     if grant_user.status_code == 200:
-        response = make_response(render_template('index.html',j=gdata.json()))
+        response = make_response(render_template('index.html',j=grant_user.json()))
         response.delete_cookie('client_secret')
         response.delete_cookie('client_id')
         return response
     else:
-        return render_template('index.html',error=gdata['oauth_error'])
+        return render_template('index.html',error=grant_user['oauth_error'])
 
 if __name__ == '__main__':
     app.run()
